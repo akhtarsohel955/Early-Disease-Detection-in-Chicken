@@ -1,0 +1,240 @@
+% ============================================================
+% Early Disease Detection in Chicken - BTech Mid-Semester Presentation
+% Exact 3-slide template matching BTechPresentation-MidsemTemplate.pptx
+% ============================================================
+\documentclass[aspectratio=169]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{xcolor}
+
+% ---- Strip all beamer chrome ----
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{frametitle}{}
+\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}{}
+\setbeamercolor{background canvas}{bg=white}
+
+% ---- Bullets ----
+\setbeamertemplate{itemize item}{\textbullet}
+\setbeamertemplate{itemize subitem}{\tiny\raise0.5pt\hbox{\rule{4pt}{4pt}}}
+\setbeamercolor{itemize item}{fg=black}
+\setbeamercolor{itemize subitem}{fg=black}
+
+% ---- Colors ----
+\definecolor{hdrdark}{RGB}{68,114,196}
+\definecolor{hdrlight}{RGB}{155,187,228}
+\definecolor{footbg}{RGB}{180,198,231}
+
+% ---- Figure path ----
+\graphicspath{{figs/}}
+
+% ---- Student Info (EDIT THESE) ----
+\newcommand{\myname}{Sohel Akhtar}
+\newcommand{\myroll}{2301216}
+\newcommand{\mysupervisor}{Prof.\ XXXX XXXX}
+\newcommand{\myproject}{Early Disease Detection in Chicken}
+
+% ============================================================
+\begin{document}
+
+% ============================================================
+%  SLIDE 1 : Project Title / Introduction / Motivation
+% ============================================================
+{
+\setbeamertemplate{background canvas}{%
+\begin{tikzpicture}[remember picture, overlay]
+  % Header
+  \fill[hdrdark] (current page.north west) rectangle
+    ([yshift=-1.2cm]current page.north east);
+  % Title
+  \node[anchor=west, text=white, font=\Large\sffamily]
+    at ([yshift=-0.6cm, xshift=0.5cm]current page.north west)
+    {Project title: \myproject};
+  % Logo
+  \node[anchor=north east, inner sep=0pt]
+    at ([xshift=0cm, yshift=0cm]current page.north east)
+    {\includegraphics[height=1.2cm]{logo.png}};
+  % Footer
+  \fill[footbg] (current page.south west) rectangle
+    ([yshift=0.45cm]current page.south east);
+  \draw[black!30, thin]
+    ([xshift=4.8cm]current page.south west) --
+    ([yshift=0.45cm, xshift=4.8cm]current page.south west);
+  \draw[black!30, thin]
+    ([xshift=8.6cm]current page.south west) --
+    ([yshift=0.45cm, xshift=8.6cm]current page.south west);
+  \node[anchor=west, font=\tiny\bfseries\sffamily]
+    at ([yshift=0.22cm, xshift=0.15cm]current page.south west)
+    {Name: \myname};
+  \node[anchor=west, font=\tiny\bfseries\sffamily]
+    at ([yshift=0.22cm, xshift=5.0cm]current page.south west)
+    {Roll No: \myroll};
+  \node[anchor=west, font=\tiny\bfseries\sffamily]
+    at ([yshift=0.22cm, xshift=8.8cm]current page.south west)
+    {Supervisor: \mysupervisor};
+\end{tikzpicture}}
+
+\begin{frame}[t]
+\vspace{1.4cm}
+\footnotesize
+\begin{itemize}\itemsep0pt
+  \item \textbf{Introduction:}
+    \begin{itemize}\itemsep1pt
+      \item Respiratory diseases cause 30--40\% mortality in poultry farms; early detection is critical
+      \item Audio-based monitoring: non-invasive, real-time disease detection from chicken vocalizations
+      \item Dataset: 346 audio files (139 Healthy, 86 Noise, 121 Unhealthy) at 96 kHz, 24-bit WAV
+    \end{itemize}
+
+  \vspace{0.15cm}
+
+  \item \textbf{Motivation:}
+    \begin{itemize}\itemsep0.5pt
+      \item Manual inspection is time-consuming; automated audio monitoring enables early disease detection
+
+      \item Hamming Window reduces spectral leakage: $h(n) = 0.54 + 0.46 \cos\left[\frac{2\pi n}{N}\right]$
+
+            {\tiny $h(n)$ = window coeff.;\; $n$ = sample index;\; $N$ = window length}
+
+      \item Kalman Filter denoises while preserving disease markers: $\hat{x}_{k|k} = \hat{x}_{k|k-1} + K_k(y_k - H\hat{x}_{k|k-1})$
+
+            {\tiny $\hat{x}_{k|k}$ = filtered state;\; $K_k$ = Kalman gain;\; $y_k$ = measurement}
+    \end{itemize}
+\end{itemize}
+\end{frame}
+}
+
+% ============================================================
+%  SLIDE 2 : Existing Work / Literature Review
+% ============================================================
+{
+\setbeamertemplate{background canvas}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[hdrlight] (current page.north west) rectangle
+    ([yshift=-1.2cm]current page.north east);
+  \node[anchor=west, text=black, font=\Large\sffamily]
+    at ([yshift=-0.6cm, xshift=0.5cm]current page.north west)
+    {Existing work / Literature review:};
+  \node[anchor=north east, inner sep=0pt]
+    at ([xshift=0cm, yshift=0cm]current page.north east)
+    {\includegraphics[height=1.2cm]{logo.png}};
+  \fill[footbg] (current page.south west) rectangle
+    ([yshift=0.45cm]current page.south east);
+  \draw[black!30, thin]
+    ([xshift=4.8cm]current page.south west) --
+    ([yshift=0.45cm, xshift=4.8cm]current page.south west);
+  \draw[black!30, thin]
+    ([xshift=8.6cm]current page.south west) --
+    ([yshift=0.45cm, xshift=8.6cm]current page.south west);
+  \node[anchor=west, font=\tiny\bfseries\sffamily]
+    at ([yshift=0.22cm, xshift=0.15cm]current page.south west)
+    {Name: \myname};
+  \node[anchor=west, font=\tiny\bfseries\sffamily]
+    at ([yshift=0.22cm, xshift=5.0cm]current page.south west)
+    {Roll No: \myroll};
+  \node[anchor=west, font=\tiny\bfseries\sffamily]
+    at ([yshift=0.22cm, xshift=8.8cm]current page.south west)
+    {Project Title: \myproject};
+\end{tikzpicture}}
+
+\begin{frame}[t]
+\vspace{1.4cm}
+\footnotesize
+\begin{itemize}\itemsep3pt
+  \item[\tiny\raise0.5pt\hbox{\rule{4pt}{4pt}}]
+    \textbf{Data in Brief 50 (2023)} --- Poultry Vocalization Signal Dataset with Hamming + Kalman preprocessing
+
+    {\tiny Hamming: $h(n) = 0.54 + 0.46\cos(2\pi n/N)$;\; Kalman: $K_k = P_{k|k-1}H^T[HP_{k|k-1}H^T + R]^{-1}$}
+
+  \item[\tiny\raise0.5pt\hbox{\rule{4pt}{4pt}}]
+    \textbf{MFCC-based classification} --- Mel-Frequency Cepstral Coefficients capture vocal tract characteristics
+
+    {\tiny $\text{MFCC}(m) = \sum_{k=1}^{K} \log(S_k)\cos[m(k-0.5)\pi/K]$ where $S_k$ = mel-filterbank energy}
+
+  \item[\tiny\raise0.5pt\hbox{\rule{4pt}{4pt}}]
+    \textbf{XGBoost} (Chen \& Guestrin 2016) --- Gradient boosting with regularization for tabular data
+\end{itemize}
+
+\vspace{0.25cm}
+
+\begin{itemize}\itemsep0pt
+  \item \textbf{Gaps in the existing solutions/work:}
+    \begin{itemize}\itemsep1pt
+      \item Limited feature sets --- most use only MFCC, ignore power spectrum disease markers
+      \item Class imbalance --- Unhealthy samples underrepresented in training
+      \item No GPU-accelerated training --- slow processing for large-scale farm deployment
+    \end{itemize}
+\end{itemize}
+\end{frame}
+}
+
+% ============================================================
+%  SLIDE 3 : Work Done Till Date
+% ============================================================
+{
+\setbeamertemplate{background canvas}{%
+\begin{tikzpicture}[remember picture, overlay]
+  \fill[hdrlight] (current page.north west) rectangle
+    ([yshift=-1.2cm]current page.north east);
+  \node[anchor=west, text=black, font=\Large\sffamily]
+    at ([yshift=-0.6cm, xshift=0.5cm]current page.north west)
+    {Work Done till date:};
+  \node[anchor=north east, inner sep=0pt]
+    at ([xshift=0cm, yshift=0cm]current page.north east)
+    {\includegraphics[height=1.2cm]{logo.png}};
+  \fill[footbg] (current page.south west) rectangle
+    ([yshift=0.45cm]current page.south east);
+  \draw[black!30, thin]
+    ([xshift=4.8cm]current page.south west) --
+    ([yshift=0.45cm, xshift=4.8cm]current page.south west);
+  \draw[black!30, thin]
+    ([xshift=8.6cm]current page.south west) --
+    ([yshift=0.45cm, xshift=8.6cm]current page.south west);
+  \node[anchor=west, font=\tiny\bfseries\sffamily]
+    at ([yshift=0.22cm, xshift=0.15cm]current page.south west)
+    {Name: \myname};
+  \node[anchor=west, font=\tiny\bfseries\sffamily]
+    at ([yshift=0.22cm, xshift=5.0cm]current page.south west)
+    {Roll No: \myroll};
+  \node[anchor=west, font=\tiny\bfseries\sffamily]
+    at ([yshift=0.22cm, xshift=8.8cm]current page.south west)
+    {Project Title: \myproject};
+\end{tikzpicture}}
+
+\begin{frame}[t]
+\vspace{1.4cm}
+\footnotesize
+\begin{itemize}\itemsep0pt
+  \item \textbf{Details of proposed work/solutions:}
+
+  \vspace{0.08cm}
+  {\scriptsize
+  Audio classification pipeline: $f_\theta(\mathbf{X}_{\text{audio}}) \to \{\text{Healthy}, \text{Noise}, \text{Unhealthy}\}$
+
+  {\tiny where $f_\theta$ = XGBoost model;\; $\mathbf{X}_{\text{audio}}\!\in\!\mathbb{R}^{102}$ = extracted features (40 MFCC + spectral + power spectrum)}
+
+  \textbf{Phase 1 (Done):} Hamming + Kalman preprocessing, 102-feature extraction (MFCC, spectral, power).
+  \textbf{Phase 2 (Done):} XGBoost GPU training, balanced sampling, StandardScaler normalization.
+  \textbf{Phase 3:} Deployment + real-time monitoring.
+  }
+
+  \vspace{0.3cm}
+
+  \item \textbf{Result achieved (if any):}
+    \begin{itemize}\itemsep1pt
+      \item Complete pipeline: 346 files $\to$ 500+ samples; XGBoost with 500 trees, GPU training in 10--15 min
+
+            {\tiny Preprocessing: Hamming + Kalman ($Q\!=\!10^{-4}$, $R\!=\!10^{-3}$); Features: 102-dim (40 MFCC + spectral + power spectrum)}
+
+      \item Classification accuracy: >90\% overall; Healthy/Noise/Unhealthy F1-scores >88\%; balanced class weights applied
+
+      \item Model deployment: classifier.pkl saved; power spectrum at 0.2 rad/sample + MFCC 1--5 most discriminative
+    \end{itemize}
+\end{itemize}
+\end{frame}
+}
+
+\end{document}
