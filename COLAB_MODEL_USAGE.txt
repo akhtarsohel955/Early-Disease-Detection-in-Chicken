@@ -1,0 +1,171 @@
+================================================================================
+HOW TO USE YOUR COLAB-TRAINED MODEL LOCALLY
+================================================================================
+
+Your model is saved in Google Drive at:
+  /content/drive/MyDrive/Poultry_Models/poultry_health_model.pkl
+  /content/drive/MyDrive/Poultry_Models/training_results.pkl
+
+================================================================================
+STEP 1: DOWNLOAD MODEL FROM GOOGLE DRIVE
+================================================================================
+
+1. Open Google Drive (drive.google.com)
+2. Navigate to: My Drive → Poultry_Models
+3. Download these files:
+   - poultry_health_model.pkl (main model file)
+   - training_results.pkl (optional - contains metrics)
+   - confusion_matrix.png (optional - visualization)
+
+4. Save to your local project directory
+
+================================================================================
+STEP 2: INSTALL DEPENDENCIES (ONE-TIME)
+================================================================================
+
+pip install xgboost librosa soundfile scikit-learn pandas tqdm
+
+================================================================================
+STEP 3: PREDICT ON SINGLE FILE
+================================================================================
+
+python predict_from_colab_model.py Healthy/1.wav
+
+Or specify model path:
+python predict_from_colab_model.py Unhealthy/1.wav poultry_health_model.pkl
+
+Output:
+  🎯 Predicted Class: Healthy
+  📊 Confidence: 0.9234 (92.34%)
+  
+  📈 Class Probabilities:
+    Healthy     : 0.9234 (92.34%) ██████████████████████████████████████████████░░░░
+    Noise       : 0.0456 (4.56%)  ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+    Unhealthy   : 0.0310 (3.10%)  █░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+
+================================================================================
+STEP 4: BATCH PREDICTION (TEST ENTIRE DATASET)
+================================================================================
+
+python batch_predict.py poultry_health_model.pkl ./
+
+This will:
+  - Test model on ALL audio files
+  - Calculate overall accuracy
+  - Show per-class accuracy
+  - Generate confusion matrix
+  - Save results to batch_prediction_results.csv
+
+Output:
+  Overall Accuracy: 0.9234 (92.34%)
+  Correct: 318/345
+  
+  Per-Class Accuracy:
+    Healthy     : 0.9420 (94.20%) - 130/138
+    Noise       : 0.8953 (89.53%) - 77/86
+    Unhealthy   : 0.9174 (91.74%) - 111/121
+
+================================================================================
+FILES YOU HAVE
+================================================================================
+
+1. predict_from_colab_model.py
+   - Predict on single audio file
+   - Shows detailed results with probabilities
+   - Provides health interpretation
+
+2. batch_predict.py
+   - Test on entire dataset
+   - Calculate accuracy metrics
+   - Generate CSV report
+
+3. Poultry_Health_Training_Colab.ipynb
+   - Original training notebook
+   - Can retrain with different parameters
+   - Saves model to Google Drive
+
+================================================================================
+EXAMPLE WORKFLOW
+================================================================================
+
+# 1. Download model from Google Drive
+#    Save as: poultry_health_model.pkl
+
+# 2. Test single file
+python predict_from_colab_model.py Healthy/1.wav
+
+# 3. Test entire dataset
+python batch_predict.py poultry_health_model.pkl ./
+
+# 4. Check results
+cat batch_prediction_results.csv
+
+================================================================================
+MODEL DETAILS
+================================================================================
+
+Model Type: XGBoost (GPU/CPU optimized)
+Features: 102 features per audio sample
+  - 80 MFCC features (40 coefficients × mean/std)
+  - 8 Spectral features (centroid, rolloff, bandwidth, ZCR)
+  - 6 Power spectrum features (0.2 rad/sample spike detection)
+  - 8 Statistical features (mean, std, RMS, skewness, kurtosis)
+
+Classes:
+  0 - Healthy (normal vocalizations)
+  1 - Noise (background noise)
+  2 - Unhealthy (respiratory disease indicators)
+
+Preprocessing:
+  - Hamming window (h(n) = 0.54 + 0.46 * cos((2π/N) * n))
+  - Fast filtering (exponential moving average)
+  - 96 kHz sampling rate
+  - 10-second audio clips
+
+Expected Accuracy: 85-95% (depending on dataset quality)
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+Error: "Model not found"
+  → Download poultry_health_model.pkl from Google Drive
+  → Place in same directory as prediction scripts
+
+Error: "Module not found"
+  → Install dependencies: pip install xgboost librosa soundfile
+
+Error: "Audio file not found"
+  → Check file path is correct
+  → Ensure .wav format
+
+Low accuracy:
+  → Check if audio files are correct format (96 kHz recommended)
+  → Verify dataset labels are correct
+  → Try retraining with more data
+
+================================================================================
+NEXT STEPS
+================================================================================
+
+1. Test model on your local dataset
+2. Check accuracy with batch_predict.py
+3. If accuracy is good (>85%), deploy for production use
+4. If accuracy is low, retrain in Colab with more data
+5. Consider creating a web API or mobile app
+
+================================================================================
+SUPPORT
+================================================================================
+
+Model trained using research paper methodology:
+  Data in Brief 50 (2023) 109528
+  Poultry Vocalization Signal Dataset
+
+For retraining:
+  - Upload Poultry_Health_Training_Colab.ipynb to Google Colab
+  - Enable GPU
+  - Run all cells
+  - Download new model
+
+================================================================================
